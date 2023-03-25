@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class AdminUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -41,9 +40,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function loanApplication(): HasMany
-    {
-        return $this->hasMany(LoanApplication::class, 'user_id', 'id');
-    }
 }
