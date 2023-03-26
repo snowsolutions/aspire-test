@@ -23,12 +23,21 @@ class AuthenticateController extends Controller
         $this->authenticationService = $authenticationService;
     }
 
+    /**
+     * Retrieve admin user info
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function info()
     {
         $userData = $this->loggedUser();
         return ApiResponseHandler::success($userData);
     }
 
+    /**
+     * Authorize the login credentials
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $loginData = $request->only(['email', 'password']);
@@ -46,7 +55,7 @@ class AuthenticateController extends Controller
                     'token' => $this->authenticationService->getToken()
                 ]);
             }
-            return ApiResponseHandler::errors(401, __('Incorrect email or password for admin account'));
+            return ApiResponseHandler::errors(422, __('Incorrect email or password for admin account'));
         } catch (\Exception $exception) {
             return ApiResponseHandler::exception($exception->getMessage());
         }

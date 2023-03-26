@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Api\AuthenticatedUser;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Resources\LoanApplicationCollection;
+use App\Http\Controllers\Resources\LoanApplicationResource;
 use App\Http\Response\ApiResponseHandler;
 use App\Repositories\LoanApplication\LoanApplicationRepository;
 use App\Services\LoanApplication\CreateApplicationService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class LoanApplicationController extends Controller
 {
@@ -27,6 +30,10 @@ class LoanApplicationController extends Controller
         $this->createApplicationService = $createApplicationService;
     }
 
+    /**
+     * Retrieve list of loan application from current logged user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -38,22 +45,46 @@ class LoanApplicationController extends Controller
         }
     }
 
+    /**
+     * Retrieve specific loan application with ID
+     * @param $applicationId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($applicationId)
+    {
+        try {
+            $application = $this->loanApplicationRepository->findById($applicationId);
+            $this->authorize('view', $application);
+            return ApiResponseHandler::success(new LoanApplicationResource($application));
+        } catch (AuthorizationException) {
+            return ApiResponseHandler::unauthorized();
+        } catch (\Exception $exception) {
+            return ApiResponseHandler::exception($exception->getMessage());
+        }
+    }
+
+    /**
+     * Store new loan application
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
     public function store(Request $request)
     {
         $data = $request->only(['purpose', 'amount', 'term']);
-        $this->handleValidation($data, [
+        list($isInvalid, $errorResponse) = $this->handleValidation($data, [
             'purpose' => 'required',
             'amount' => 'required',
             'term' => 'required',
         ]);
-
         try {
-            $data['user_id'] = $this->loggedUser()->getAuthIdentifier();
-            $application = $this->createApplicationService->execute($data);
-            return ApiResponseHandler::success($application);
+            if (!$isInvalid) {
+                $data['user_id'] = $this->loggedUser()->getAuthIdentifier();
+                $application = $this->createApplicationService->execute($data);
+                return ApiResponseHandler::success($application);
+            }
+            return $errorResponse;
         } catch (\Exception $exception) {
             return ApiResponseHandler::exception($exception->getMessage());
         }
-
     }
 }

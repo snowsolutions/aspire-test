@@ -22,30 +22,42 @@ class AuthenticateController extends Controller
         $this->authenticationService = $authenticationService;
     }
 
+    /**
+     * Retrieve user info
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function info()
     {
         $userData = $this->loggedUser();
         return ApiResponseHandler::success($userData);
     }
 
+    /**
+     * Authorize the login credentials
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
     public function login(Request $request)
     {
         $loginData = $request->only(['email', 'password']);
 
 
-        $this->handleValidation($loginData, [
+        list($isInvalid, $errorResponse) = $this->handleValidation($loginData, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
 
         try {
-            if ($this->authenticationService->login($loginData)) {
-                return ApiResponseHandler::success([
-                    'token' => $this->authenticationService->getToken()
-                ]);
+            if (!$isInvalid) {
+                if ($this->authenticationService->login($loginData)) {
+                    return ApiResponseHandler::success([
+                        'token' => $this->authenticationService->getToken()
+                    ]);
+                }
+                return ApiResponseHandler::errors(422, __('Incorrect email or password'));
             }
-            return ApiResponseHandler::errors(401, __('Incorrect email or password'));
+            return $errorResponse;
         } catch (\Exception $exception) {
             return ApiResponseHandler::exception($exception->getMessage());
         }

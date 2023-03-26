@@ -15,6 +15,7 @@ class LoanApplication extends Model
         'status',
         'purpose',
         'amount',
+        'remaining_amount',
         'user_id',
         'term',
     ];

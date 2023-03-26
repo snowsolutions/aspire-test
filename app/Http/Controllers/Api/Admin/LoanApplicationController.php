@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Resources\LoanApplicationCollection;
 use App\Http\Response\ApiResponseHandler;
 use App\Repositories\LoanApplication\LoanApplicationRepository;
+use App\Services\LoanApplication\ApproveApplicationService;
 use App\Services\LoanApplication\CreateApplicationService;
 use Illuminate\Http\Request;
 
@@ -17,17 +18,21 @@ class LoanApplicationController extends Controller
     use AuthenticatedUser;
 
     protected LoanApplicationRepository $loanApplicationRepository;
-    protected CreateApplicationService $createApplicationService;
+    protected ApproveApplicationService $approveApplicationService;
 
     public function __construct(
         LoanApplicationRepository $loanApplicationRepository,
-        CreateApplicationService  $createApplicationService
+        ApproveApplicationService $approveApplicationService
     )
     {
         $this->loanApplicationRepository = $loanApplicationRepository;
-        $this->createApplicationService = $createApplicationService;
+        $this->approveApplicationService = $approveApplicationService;
     }
 
+    /**
+     * Retrieve all loan applications in the system
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -38,8 +43,19 @@ class LoanApplicationController extends Controller
         }
     }
 
-    public function approve(Request $request)
+    /**
+     * Approve a pending loan application
+     * @param $applicationId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function approve($applicationId)
     {
-
+        try {
+            $application = $this->loanApplicationRepository->findById($applicationId);
+            $result = $this->approveApplicationService->execute($application);
+            return ApiResponseHandler::success($result);
+        } catch (\Exception $exception) {
+            return ApiResponseHandler::exception($exception->getMessage());
+        }
     }
 }

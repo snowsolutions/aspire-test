@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Payment;
 
+use App\Models\Attributes\Payment\Status;
 use App\Models\Payment;
 use Illuminate\Support\Collection;
 
@@ -35,6 +36,16 @@ class PaymentRepository implements PaymentRepositoryInterface
     public function findAllByUserId($userId): Collection
     {
         return Payment::all()->where('user_id', $userId);
+    }
+
+    /**
+     * Retrieve a record of the resource with specific loan_application_id
+     * @param $applicationId
+     * @return Collection
+     */
+    public function findAllPendingByApplication($applicationId)
+    {
+        return Payment::all()->where('loan_application_id', $applicationId)->where('status', Status::PENDING->name);
     }
 
     /**

@@ -6,15 +6,18 @@ use Illuminate\Support\Facades\Validator;
 
 trait ValidatorHandler
 {
+    /**
+     * Handle the validator result
+     * @param $data
+     * @param $rule
+     * @return array
+     */
     public function handleValidation($data, $rule)
     {
         $validator = Validator::make(
             $data,
             $rule
         );
-
-        if ($validator->fails()) {
-            return \App\Http\Response\ApiResponseHandler::errors(401, $validator->errors());
-        }
+        return [$validator->fails(), \App\Http\Response\ApiResponseHandler::errors(422, $validator->errors())];
     }
 }

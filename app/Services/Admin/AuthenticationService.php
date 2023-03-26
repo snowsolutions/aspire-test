@@ -9,18 +9,25 @@ class AuthenticationService
 {
     private $token = null;
 
-    use AuthenticatedUser;
-
+    /**
+     * Attempt to login in with credentials
+     * @param $data
+     * @return bool
+     */
     public function login($data)
     {
         if (Auth::guard('admin')->attempt($data)) {
-            $user = $this->loggedUser('admin');
+            $user = Auth::guard('admin')->user();
             $this->token = $user->createToken('admin')->plainTextToken;
             return true;
         }
         return false;
     }
 
+    /**
+     * Retrieve the token
+     * @return null
+     */
     public function getToken()
     {
         return $this->token;

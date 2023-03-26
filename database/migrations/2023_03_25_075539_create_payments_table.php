@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('status')->nullable(false);
             $table->decimal('amount', 16)->nullable(false);
             $table->unsignedBigInteger('loan_application_id');
             $table->foreign('loan_application_id')->references('id')->on('loan_applications')->cascadeOnDelete();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->dateTime('payment_date')->nullable(false);
             $table->timestamps();
         });
     }

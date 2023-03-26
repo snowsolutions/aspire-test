@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -15,6 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\LoanApplication' => 'App\Policies\LoanApplicationPolicy',
+        'App\Models\Payment' => 'App\Policies\PaymentPolicy',
     ];
 
     /**
@@ -23,5 +25,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+        Gate::policy(\App\Models\LoanApplication::class, \App\Policies\LoanApplicationPolicy::class);
     }
 }

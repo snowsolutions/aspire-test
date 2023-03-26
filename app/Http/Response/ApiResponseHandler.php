@@ -106,7 +106,7 @@ class ApiResponseHandler
      * @param string $message
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function unProcessableEntity(string $message): \Illuminate\Http\JsonResponse
+    public static function unProcessableEntity(string $message = ''): \Illuminate\Http\JsonResponse
     {
         return response()->json([
             'status' => 422,
