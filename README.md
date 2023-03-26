@@ -1,66 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+# Mini Aspire API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## System requirements
 
-## Learning Laravel
+Webserver Apache or Nginx or simply use built-in PHP server (artisan serve)
+- PHP 8.1+
+- MySQL 5.7+
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation Step
+Assume that you already have PHP and MySQL installation on your environment
+1. Create 2 empty databases `aspire` and `aspire_test`
+2. Adjust environment files `.env` and `.env.testing` to suit your configuration. You can copy the content of `.env.example` for these 2 files
+3. Run migration for local environment with command
+```
+php artisan config:cache --env="local" && php artisan migrate:fresh --seed --env="local"
+```
+4. Start browsing the site with virtual host setup or with `php artisan serve`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Configuration
+- use `.env` file for local environments and `.env.testing` file for test environments
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Account & Test data
+### User account
+This account credential is used to create new loan application & making payment
+```
+# User 1
+user@test.com / 123456
+```
 
-## Laravel Sponsors
+```
+# User 2
+victoria@test.com / 123456
+```
+### Admin account
+This account credential is used to approve loan application
+```
+admin@admin.com / 654321
+```
+### Loan Application data
+After run the migration command with `--seed` the database will have 3 record of loan application:
+- `ID 1` : belongs to user 1 and `PENDING` status
+- `ID 2` : belongs to user 1 and `APPROVED` status
+- `ID 3` : belongs to user 2 and `PENDING` status
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## APIs
+### Postman collection
+You can use the provided Postman Collection to import into your Postman app
+```
+./docs/postman/aspire-mini-api.postman_collection.json
+```
+Before you try out, take a minute to configure the `host` value in `variables` setting of the collection to fit your environment
 
-### Premium Partners
+## Staging application
+There is a staging application hosted on cloud and you can use `Postman` to access directly to the application with below endpoint URL
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```
+# User API endpoint
+https://aspire.phucnguyen68.com/api/
+```
 
-## Contributing
+```
+# Admin API endpoint
+https://aspire.phucnguyen68.com/api/admin/
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Tests
+**Unit test command**
+You can test the application by run the following command
+```
+composer test
+```
+This command included 3 single command as below, you can run individual as your need
+```
+"@php artisan config:cache --env=testing"
+"@php artisan test --env=testing"
+"@php artisan config:cache --env=local"
+```

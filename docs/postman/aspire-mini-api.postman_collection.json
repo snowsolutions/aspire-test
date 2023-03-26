@@ -1,0 +1,416 @@
+{
+	"info": {
+		"_postman_id": "b2f7e0ed-d67d-4e95-829b-7ca4a7f8f1e7",
+		"name": "Aspire Assignment (Pentalog)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "969936"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Guest",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin@admin.com\",\r\n    \"password\": \"654321\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authorized",
+					"item": [
+						{
+							"name": "Loan Application",
+							"item": [
+								{
+									"name": "Approve Application",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/admin/loans/approve/1",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"admin",
+												"loans",
+												"approve",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Loan Application",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/admin/loans/",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"admin",
+												"loans",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Admin User Info",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/info",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"info"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "18|g6ZjE7H6piiTv6zvcgqHYIMOFN0xqmkNguI1Fblm",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customer User",
+			"item": [
+				{
+					"name": "Guest",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"user@test.com\",\r\n    \"password\" : \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/users/login",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authorized",
+					"item": [
+						{
+							"name": "Loan Application",
+							"item": [
+								{
+									"name": "Get Single Application",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/loans/3",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"loans",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get List Application",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/loans",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"loans"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create new application",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"purpose\": \"Personal\",\r\n    \"term\" : 3\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/loans",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"loans"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "User Info",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/users/info",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"users",
+												"info"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Payment",
+							"item": [
+								{
+									"name": "Make Payment",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\" : 4,\r\n    \"amount\": 4000\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/payments/make_payment",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"payments",
+												"make_payment"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "List Payments",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/payments",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"payments"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Single Payment",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/payments/1",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"payments",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "3|SshGWkgOwhBKr9qbyOy9TtK7gS4bvqOBMtXf2BQK",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://aspire-test.localhost/api",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "admin_host",
+			"value": "http://aspire-test.localhost/api/admin/",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "host",
+			"value": "https://aspire.phucnguyen68.com/api",
+			"type": "string"
+		},
+		{
+			"key": "admin_host",
+			"value": "https://aspire.phucnguyen68.com/api/admin/",
+			"type": "string"
+		}
+	]
+}
