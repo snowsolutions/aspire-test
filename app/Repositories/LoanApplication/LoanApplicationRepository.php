@@ -7,10 +7,8 @@ use Illuminate\Support\Collection;
 
 class LoanApplicationRepository implements LoanApplicationRepositoryInterface
 {
-
     /**
      * Retrieve all records of the resource
-     * @return Collection
      */
     public function findAll(): Collection
     {
@@ -19,8 +17,6 @@ class LoanApplicationRepository implements LoanApplicationRepositoryInterface
 
     /**
      * Retrieve a record of the resource with specific ID
-     * @param $id
-     * @return LoanApplication|null
      */
     public function findById($id): ?LoanApplication
     {
@@ -29,8 +25,6 @@ class LoanApplicationRepository implements LoanApplicationRepositoryInterface
 
     /**
      * Retrieve a record of the resource with specific user_id
-     * @param $userId
-     * @return Collection
      */
     public function findAllByUserId($userId): Collection
     {
@@ -39,19 +33,16 @@ class LoanApplicationRepository implements LoanApplicationRepositoryInterface
 
     /**
      * Update current resource with specific data
-     * @param LoanApplication $model
-     * @return bool|null
      */
     public function update(LoanApplication $model, $data): bool|null
     {
         $model->fill($data);
+
         return $this->save($model);
     }
 
     /**
      * Save current resource
-     * @param LoanApplication $model
-     * @return bool|null
      */
     public function save(LoanApplication $model): bool|null
     {
@@ -60,8 +51,6 @@ class LoanApplicationRepository implements LoanApplicationRepositoryInterface
 
     /**
      * Delete current resource
-     * @param LoanApplication $model
-     * @return bool|null
      */
     public function delete(LoanApplication $model): bool|null
     {

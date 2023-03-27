@@ -13,15 +13,16 @@ use App\Repositories\Payment\PaymentRepository;
 class MakePaymentService
 {
     protected PaymentRepository $paymentRepository;
+
     protected LoanApplicationRepository $loanApplicationRepository;
+
     protected RecalculateRemainingTotalService $recalculateRemainingTotalService;
 
     public function __construct(
-        PaymentRepository                $paymentRepository,
-        LoanApplicationRepository        $loanApplicationRepository,
+        PaymentRepository $paymentRepository,
+        LoanApplicationRepository $loanApplicationRepository,
         RecalculateRemainingTotalService $recalculateRemainingTotalService
-    )
-    {
+    ) {
         $this->paymentRepository = $paymentRepository;
         $this->loanApplicationRepository = $loanApplicationRepository;
         $this->recalculateRemainingTotalService = $recalculateRemainingTotalService;
@@ -29,9 +30,9 @@ class MakePaymentService
 
     /**
      * Submit an amount to specific payment
-     * @param Payment $payment
-     * @param $paidAmount
+     *
      * @return Payment
+     *
      * @throws InvalidApplicationStatus
      * @throws InvalidPaymentAmount
      * @throws InvalidPaymentStatus

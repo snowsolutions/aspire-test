@@ -12,21 +12,22 @@ use App\Services\Payment\CreatePaymentService;
 class CreateApplicationService
 {
     protected LoanApplicationRepository $loanApplicationRepository;
+
     protected CreatePaymentService $createPaymentService;
 
     public function __construct(
         LoanApplicationRepository $loanApplicationRepository,
-        CreatePaymentService      $createPaymentService
-    )
-    {
+        CreatePaymentService $createPaymentService
+    ) {
         $this->loanApplicationRepository = $loanApplicationRepository;
         $this->createPaymentService = $createPaymentService;
     }
 
     /**
      * Create a new loan application
-     * @param $data
+     *
      * @return LoanApplication
+     *
      * @throws InvalidApplicationAmount
      * @throws InvalidApplicationTerm
      */
@@ -39,7 +40,7 @@ class CreateApplicationService
         if ($data['term'] <= 0) {
             throw new InvalidApplicationTerm('The term must greater than 0');
         }
-        if (!array_key_exists('status', $data)) {
+        if (! array_key_exists('status', $data)) {
             $data['status'] = Status::PENDING->name;
         }
         $data['remaining_amount'] = $data['amount'];
@@ -49,6 +50,7 @@ class CreateApplicationService
          * Create schedule payment according to term & amount
          */
         $this->createPaymentService->execute($loanApplication);
+
         return $loanApplication;
     }
 }

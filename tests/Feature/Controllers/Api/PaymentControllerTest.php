@@ -9,15 +9,16 @@ class PaymentControllerTest extends ApiTestCase
 {
     /**
      * Test GET /api/payments (Logged in)
+     *
      * @return void
      */
     public function testIndex()
     {
         $token = $this->loginAsUser();
 
-        $response = $this->get(self::USER_API_PREFIX . '/payments')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/payments')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -31,13 +32,14 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test GET /api/payments (Not logged in)
+     *
      * @return void
      */
     public function testIndexNotLoggedIn()
     {
-        $response = $this->get(self::USER_API_PREFIX . '/payments')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/payments')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
 
         $this->assertEquals(403, $response->getStatusCode());
@@ -45,15 +47,16 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test GET /api/payments/{id} (Logged in)
+     *
      * @return void
      */
     public function testShowLoggedIn()
     {
         $token = $this->loginAsUser();
 
-        $response = $this->get(self::USER_API_PREFIX . '/payments/1')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/payments/1')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -65,15 +68,16 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test GET /api/payments/{id} (Unauthorized)
+     *
      * @return void
      */
     public function testShowUnauthorized()
     {
         $token = $this->loginAsUser();
 
-        $response = $this->get(self::USER_API_PREFIX . '/payments/9')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/payments/9')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(401, $response->getStatusCode());
@@ -81,13 +85,14 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test GET /api/payments/{id} (Not logged in)
+     *
      * @return void
      */
     public function testShowNotLoggedIn()
     {
-        $response = $this->get(self::USER_API_PREFIX . '/payments/1')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/payments/1')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
 
         $this->assertEquals(403, $response->getStatusCode());
@@ -95,6 +100,7 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/payments/make_payment (Logged in)
+     *
      * @return void
      */
     public function testMakePaymentLoggedIn()
@@ -103,11 +109,11 @@ class PaymentControllerTest extends ApiTestCase
 
         $jsonData = [
             'id' => 4,
-            'amount' => 4000
+            'amount' => 4000,
         ];
-        $response = $this->postJson(self::USER_API_PREFIX . '/payments/make_payment', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/payments/make_payment', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -121,16 +127,17 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/payments/make_payment (Not logged in)
+     *
      * @return void
      */
     public function testMakePaymentNotLoggedIn()
     {
         $jsonData = [
             'id' => 4,
-            'amount' => 4000
+            'amount' => 4000,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/payments/make_payment', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/payments/make_payment', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
         ]);
 
@@ -139,6 +146,7 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/payments/make_payment (Unauthorized)
+     *
      * @return void
      */
     public function testMakePaymentUnauthorized()
@@ -147,12 +155,12 @@ class PaymentControllerTest extends ApiTestCase
 
         $jsonData = [
             'id' => 9,
-            'amount' => 4000
+            'amount' => 4000,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/payments/make_payment', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/payments/make_payment', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(401, $response->getStatusCode());
@@ -160,6 +168,7 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/payments/make_payment (Without amount)
+     *
      * @return void
      */
     public function testMakePaymentWithoutAmount()
@@ -170,9 +179,9 @@ class PaymentControllerTest extends ApiTestCase
             'id' => 4,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/payments/make_payment', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/payments/make_payment', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(422, $response->getStatusCode());
@@ -180,6 +189,7 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/payments/make_payment (Without PaymentId)
+     *
      * @return void
      */
     public function testMakePaymentWithoutPaymentId()
@@ -187,12 +197,12 @@ class PaymentControllerTest extends ApiTestCase
         $token = $this->loginAsUser();
 
         $jsonData = [
-            'amount' => 4000
+            'amount' => 4000,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/payments/make_payment', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/payments/make_payment', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(422, $response->getStatusCode());
@@ -200,6 +210,7 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/payments/make_payment (Once off payment)
+     *
      * @return void
      */
     public function testMakePaymentOnceOff()
@@ -208,12 +219,12 @@ class PaymentControllerTest extends ApiTestCase
 
         $jsonData = [
             'id' => 4,
-            'amount' => 8000
+            'amount' => 8000,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/payments/make_payment', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/payments/make_payment', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -235,6 +246,7 @@ class PaymentControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/payments/make_payment (Pay greater amount)
+     *
      * @return void
      */
     public function testMakePaymentWithGreaterAmount()
@@ -243,12 +255,12 @@ class PaymentControllerTest extends ApiTestCase
 
         $jsonData = [
             'id' => 4,
-            'amount' => 4000
+            'amount' => 4000,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/payments/make_payment', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/payments/make_payment', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();

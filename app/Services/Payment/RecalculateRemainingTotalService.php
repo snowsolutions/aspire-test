@@ -12,14 +12,13 @@ class RecalculateRemainingTotalService
 
     public function __construct(
         PaymentRepository $paymentRepository
-    )
-    {
+    ) {
         $this->paymentRepository = $paymentRepository;
     }
 
     /**
      * Recalculate the remaining total and update other pending payments with new amount
-     * @param LoanApplication $application
+     *
      * @return \Illuminate\Support\Collection|void
      */
     public function execute(LoanApplication $application)

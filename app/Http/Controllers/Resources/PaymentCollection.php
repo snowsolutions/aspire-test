@@ -11,13 +11,12 @@ class PaymentCollection extends ResourceCollection
     /**
      * Transform the resource into an array
      *
-     * @param \Illuminate\Http\Request $request
-     * @return array
+     * @param  \Illuminate\Http\Request  $request
      */
     public function toArray($request): array
     {
         return [
-            'payments' => $this->collection
+            'payments' => $this->collection,
         ];
     }
 }

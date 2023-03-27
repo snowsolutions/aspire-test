@@ -13,15 +13,15 @@ class ApproveApplicationService
 
     public function __construct(
         LoanApplicationRepository $loanApplicationRepository
-    )
-    {
+    ) {
         $this->loanApplicationRepository = $loanApplicationRepository;
     }
 
     /**
      * Approve a pending application
-     * @param LoanApplication $application
+     *
      * @return LoanApplication
+     *
      * @throws InvalidApplicationStatus
      */
     public function execute(LoanApplication $application)
@@ -31,6 +31,7 @@ class ApproveApplicationService
         }
         $application->status = Status::APPROVED->name;
         $this->loanApplicationRepository->save($application);
+
         return $application;
     }
 }

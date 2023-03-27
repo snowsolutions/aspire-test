@@ -21,7 +21,7 @@ class LoanApplication extends Model
     ];
 
     protected $with = [
-        'payment'
+        'payment',
     ];
 
     public function user(): BelongsTo

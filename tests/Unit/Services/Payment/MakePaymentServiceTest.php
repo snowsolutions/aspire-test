@@ -16,13 +16,13 @@ use Tests\TestCase;
 
 class MakePaymentServiceTest extends TestCase
 {
-    /** @var PaymentRepository|PaymentRepository&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject  */
+    /** @var PaymentRepository|PaymentRepository&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject */
     protected $paymentRepositoryMock;
 
-    /** @var LoanApplicationRepository|LoanApplicationRepository&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject  */
+    /** @var LoanApplicationRepository|LoanApplicationRepository&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject */
     protected $loanApplicationRepositoryMock;
 
-    /** @var RecalculateRemainingTotalService|RecalculateRemainingTotalService&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject  */
+    /** @var RecalculateRemainingTotalService|RecalculateRemainingTotalService&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject */
     protected $recalculateRemainingTotalServiceMock;
 
     protected function setUp(): void

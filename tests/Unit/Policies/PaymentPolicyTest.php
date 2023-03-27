@@ -4,7 +4,6 @@ namespace Tests\Unit\Policies;
 
 use App\Models\Payment;
 use App\Models\User;
-use App\Policies\LoanApplicationPolicy;
 use App\Policies\PaymentPolicy;
 use Tests\TestCase;
 

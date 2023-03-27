@@ -2,11 +2,9 @@
 
 namespace Tests\Unit\Services\Payment;
 
-use App\Models\Attributes\LoanApplication\Status;
 use App\Models\LoanApplication;
 use App\Models\Payment;
 use App\Repositories\Payment\PaymentRepository;
-use App\Services\Payment\CreatePaymentService;
 use App\Services\Payment\RecalculateRemainingTotalService;
 use Tests\TestCase;
 

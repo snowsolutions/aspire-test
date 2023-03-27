@@ -8,8 +8,7 @@ trait ValidatorHandler
 {
     /**
      * Handle the validator result
-     * @param $data
-     * @param $rule
+     *
      * @return array
      */
     public function handleValidation($data, $rule)
@@ -18,6 +17,7 @@ trait ValidatorHandler
             $data,
             $rule
         );
+
         return [$validator->fails(), \App\Http\Response\ApiResponseHandler::errors(422, $validator->errors())];
     }
 }

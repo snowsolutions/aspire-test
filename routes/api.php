@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 /**
  * User routes
  */
-
 Route::group(['prefix' => 'users'], function () {
     Route::post('login', [\App\Http\Controllers\Api\AuthenticateController::class, 'login'])->name('login');
     Route::middleware('auth:sanctum')->group(function () {
@@ -54,7 +52,4 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('approve/{id}', [\App\Http\Controllers\Api\Admin\LoanApplicationController::class, 'approve']);
         });
     });
-
 });
-
-

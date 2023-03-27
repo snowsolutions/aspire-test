@@ -16,8 +16,10 @@ class AuthenticationService
         if (Auth::guard('api')->attempt($data)) {
             $user = $this->loggedUser();
             $this->token = $user->createToken('api')->plainTextToken;
+
             return true;
         }
+
         return false;
     }
 

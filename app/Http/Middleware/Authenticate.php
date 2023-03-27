@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Response\ApiResponseHandler;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;

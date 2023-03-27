@@ -15,12 +15,11 @@ class Payment extends Model
         'status',
         'loan_application_id',
         'payment_date',
-        'user_id'
+        'user_id',
     ];
 
-    public function application() : BelongsTo
+    public function application(): BelongsTo
     {
         return $this->belongsTo(LoanApplication::class, 'loan_application_id', 'id');
     }
-
 }

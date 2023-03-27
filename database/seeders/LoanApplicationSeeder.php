@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Attributes\LoanApplication\Status;
 use App\Services\LoanApplication\CreateApplicationService;
-use App\Services\Payment\CreatePaymentService;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class LoanApplicationSeeder extends Seeder
 {
@@ -14,14 +12,15 @@ class LoanApplicationSeeder extends Seeder
 
     public function __construct(
         CreateApplicationService $createApplicationService,
-    )
-    {
+    ) {
         $this->createApplicationService = $createApplicationService;
     }
 
     /**
      * Insert dummy data for loan_applications table
+     *
      * @return void
+     *
      * @throws \App\Exceptions\LoanApplication\InvalidApplicationAmount
      * @throws \App\Exceptions\LoanApplication\InvalidApplicationTerm
      */
@@ -51,7 +50,7 @@ class LoanApplicationSeeder extends Seeder
                 'term' => 3,
                 'amount' => 5000,
                 'remaining_amount' => 5000,
-            ]
+            ],
         ];
 
         foreach ($loanDummyData as $data) {

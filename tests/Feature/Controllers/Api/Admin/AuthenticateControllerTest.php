@@ -6,19 +6,17 @@ use Tests\Feature\Controllers\Api\ApiTestCase;
 
 class AuthenticateControllerTest extends ApiTestCase
 {
-
     /**
      * Test POST /api/admin/login (Success)
-     * @return void
      */
     public function testLoginSuccess(): void
     {
         $jsonData = [
             'email' => 'admin@admin.com',
-            'password' => '654321'
+            'password' => '654321',
         ];
 
-        $response = $this->postJson(self::ADMIN_API_PREFIX . '/login', $jsonData);
+        $response = $this->postJson(self::ADMIN_API_PREFIX.'/login', $jsonData);
 
         $content = $response->getContent();
 
@@ -31,38 +29,35 @@ class AuthenticateControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/admin/login (Fail)
-     * @return void
      */
-
     public function testLoginFail(): void
     {
         $jsonData = [
             'email' => 'admin@admin.com',
-            'password' => 'incorrect_password'
+            'password' => 'incorrect_password',
         ];
 
-        $response = $this->postJson(self::ADMIN_API_PREFIX . '/login', $jsonData);
+        $response = $this->postJson(self::ADMIN_API_PREFIX.'/login', $jsonData);
 
         $response->assertStatus(422);
     }
 
     /**
      * Test GET /api/admin/info (Success)
+     *
      * @return void
      */
-
     public function testInfo()
     {
         $token = $this->loginAsAdmin();
 
-        $response = $this->get(self::ADMIN_API_PREFIX . '/info')->withHeaders([
+        $response = $this->get(self::ADMIN_API_PREFIX.'/info')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
         $content = json_decode($content, true);
-
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('data', $content);
@@ -76,14 +71,14 @@ class AuthenticateControllerTest extends ApiTestCase
 
     /**
      * Test GET /api/admin/info (Fail)
+     *
      * @return void
      */
-
     public function testInfoFail()
     {
-        $response = $this->get(self::ADMIN_API_PREFIX . '/info')->withHeaders([
+        $response = $this->get(self::ADMIN_API_PREFIX.'/info')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
 
         $this->assertEquals(403, $response->getStatusCode());

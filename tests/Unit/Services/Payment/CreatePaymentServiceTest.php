@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class CreatePaymentServiceTest extends TestCase
 {
-    /** @var PaymentRepository|PaymentRepository&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject  */
+    /** @var PaymentRepository|PaymentRepository&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject */
     protected $paymentRepositoryMock;
 
     protected function setUp(): void

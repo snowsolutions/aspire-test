@@ -12,16 +12,17 @@ class ApiTestCase extends TestCase
     protected $seed = true;
 
     const USER_API_PREFIX = '/api';
+
     const ADMIN_API_PREFIX = '/api/admin';
 
     protected function loginAsUser()
     {
         $jsonData = [
             'email' => 'user@test.com',
-            'password' => '123456'
+            'password' => '123456',
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/users/login', $jsonData);
+        $response = $this->postJson(self::USER_API_PREFIX.'/users/login', $jsonData);
 
         $content = $response->getContent();
 
@@ -34,10 +35,10 @@ class ApiTestCase extends TestCase
     {
         $jsonData = [
             'email' => 'admin@admin.com',
-            'password' => '654321'
+            'password' => '654321',
         ];
 
-        $response = $this->postJson(self::ADMIN_API_PREFIX . '/login', $jsonData);
+        $response = $this->postJson(self::ADMIN_API_PREFIX.'/login', $jsonData);
 
         $content = $response->getContent();
 

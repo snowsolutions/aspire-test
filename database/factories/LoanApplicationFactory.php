@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Attributes\LoanApplication\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LoanApplication>
@@ -18,11 +17,12 @@ class LoanApplicationFactory extends Factory
      */
     public function definition(): array
     {
-        $amount = fake()->numberBetween(1000,10000);
+        $amount = fake()->numberBetween(1000, 10000);
+
         return [
             'status' => Status::PENDING->name,
             'purpose' => fake()->text(100),
-            'term' => fake()->numberBetween(3,10),
+            'term' => fake()->numberBetween(3, 10),
             'amount' => $amount,
             'remaining_amount' => $amount,
             'user_id' => 1,

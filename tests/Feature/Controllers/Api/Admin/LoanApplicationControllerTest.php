@@ -9,15 +9,14 @@ class LoanApplicationControllerTest extends ApiTestCase
 {
     /**
      * Test GET /api/admin/loans (Logged in)
-     * @return void
      */
     public function testIndexLoggedIn(): void
     {
         $token = $this->loginAsAdmin();
 
-        $response = $this->get(self::ADMIN_API_PREFIX . '/loans')->withHeaders([
+        $response = $this->get(self::ADMIN_API_PREFIX.'/loans')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -31,28 +30,26 @@ class LoanApplicationControllerTest extends ApiTestCase
 
     /**
      * Test GET /api/admin/loans (Not logged in)
-     * @return void
      */
     public function testIndexNotLoggedIn(): void
     {
-        $response = $this->get(self::ADMIN_API_PREFIX . '/loans')->withHeaders([
+        $response = $this->get(self::ADMIN_API_PREFIX.'/loans')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
         $this->assertEquals(403, $response->getStatusCode());
     }
 
     /**
      * Test POST /api/admin/approve/{id} (Logged in)
-     * @return void
      */
     public function testApproveLoggedIn(): void
     {
         $token = $this->loginAsAdmin();
 
-        $response = $this->post(self::ADMIN_API_PREFIX . '/loans/approve/1')->withHeaders([
+        $response = $this->post(self::ADMIN_API_PREFIX.'/loans/approve/1')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -65,13 +62,12 @@ class LoanApplicationControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/admin/approve/{id} (Not logged in)
-     * @return void
      */
     public function testApproveNotLoggedIn(): void
     {
-        $response = $this->post(self::ADMIN_API_PREFIX . '/loans/approve/1')->withHeaders([
+        $response = $this->post(self::ADMIN_API_PREFIX.'/loans/approve/1')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
 
         $this->assertEquals(403, $response->getStatusCode());

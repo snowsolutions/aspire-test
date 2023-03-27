@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Controllers\Api;
 
-
 use App\Models\Attributes\LoanApplication\Status;
 
 class LoanApplicationControllerTest extends ApiTestCase
@@ -14,9 +13,9 @@ class LoanApplicationControllerTest extends ApiTestCase
     {
         $token = $this->loginAsUser();
 
-        $response = $this->get(self::USER_API_PREFIX . '/loans')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/loans')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -33,9 +32,9 @@ class LoanApplicationControllerTest extends ApiTestCase
      */
     public function testIndexNotLoggedIn(): void
     {
-        $response = $this->get(self::USER_API_PREFIX . '/loans')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/loans')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
 
         $this->assertEquals(403, $response->getStatusCode());
@@ -48,9 +47,9 @@ class LoanApplicationControllerTest extends ApiTestCase
     {
         $token = $this->loginAsUser();
 
-        $response = $this->get(self::USER_API_PREFIX . '/loans/1')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/loans/1')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -60,8 +59,8 @@ class LoanApplicationControllerTest extends ApiTestCase
         $this->assertArrayHasKey('data', $content);
         $this->assertEquals('PENDING', $content['data']['status']);
         $this->assertEquals(3, $content['data']['term']);
-        $this->assertEquals("10000.00", $content['data']['amount']);
-        $this->assertEquals("10000.00", $content['data']['remaining_amount']);
+        $this->assertEquals('10000.00', $content['data']['amount']);
+        $this->assertEquals('10000.00', $content['data']['remaining_amount']);
         $this->assertEquals(1, $content['data']['user_id']);
     }
 
@@ -70,9 +69,9 @@ class LoanApplicationControllerTest extends ApiTestCase
      */
     public function testShowNotLoggedIn(): void
     {
-        $response = $this->get(self::USER_API_PREFIX . '/loans/{1}')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/loans/{1}')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
 
         $this->assertEquals(403, $response->getStatusCode());
@@ -85,9 +84,9 @@ class LoanApplicationControllerTest extends ApiTestCase
     {
         $token = $this->loginAsUser();
 
-        $response = $this->get(self::USER_API_PREFIX . '/loans/3')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/loans/3')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(401, $response->getStatusCode());
@@ -103,12 +102,12 @@ class LoanApplicationControllerTest extends ApiTestCase
         $jsonData = [
             'purpose' => 'Personal',
             'amount' => 10000,
-            'term' => 3
+            'term' => 3,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/loans', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/loans', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -137,16 +136,15 @@ class LoanApplicationControllerTest extends ApiTestCase
 
         $jsonData = [
             'purpose' => 'Personal',
-            'term' => 3
+            'term' => 3,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/loans', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/loans', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(422, $response->getStatusCode());
-
     }
 
     /**
@@ -161,12 +159,11 @@ class LoanApplicationControllerTest extends ApiTestCase
             'amount' => 10000,
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/loans', $jsonData)->withHeaders([
+        $response = $this->postJson(self::USER_API_PREFIX.'/loans', $jsonData)->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $this->assertEquals(422, $response->getStatusCode());
-
     }
 }

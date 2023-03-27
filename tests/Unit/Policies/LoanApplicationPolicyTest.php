@@ -17,7 +17,7 @@ class LoanApplicationPolicyTest extends TestCase
     public function testCanView()
     {
         $user = new User();
-        $user->id  = 1;
+        $user->id = 1;
         $application = new LoanApplication();
         $application->user_id = 1;
         $policy = new LoanApplicationPolicy();
@@ -28,7 +28,7 @@ class LoanApplicationPolicyTest extends TestCase
     public function testCanNotView()
     {
         $user = new User();
-        $user->id  = 1;
+        $user->id = 1;
         $application = new LoanApplication();
         $application->user_id = 2;
         $policy = new LoanApplicationPolicy();

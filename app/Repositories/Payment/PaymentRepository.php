@@ -8,10 +8,8 @@ use Illuminate\Support\Collection;
 
 class PaymentRepository implements PaymentRepositoryInterface
 {
-
     /**
      * Retrieve all records of the resource
-     * @return Collection
      */
     public function findAll(): Collection
     {
@@ -20,8 +18,6 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     /**
      * Retrieve a record of the resource with specific ID
-     * @param $id
-     * @return Payment|null
      */
     public function findById($id): ?Payment
     {
@@ -30,8 +26,6 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     /**
      * Retrieve a record of the resource with specific user_id
-     * @param $userId
-     * @return Collection
      */
     public function findAllByUserId($userId): Collection
     {
@@ -40,7 +34,7 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     /**
      * Retrieve a record of the resource with specific loan_application_id
-     * @param $applicationId
+     *
      * @return Collection
      */
     public function findAllPendingByApplication($applicationId)
@@ -50,19 +44,16 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     /**
      * Update current resource with specific data
-     * @param Payment $model
-     * @return bool|null
      */
     public function update(Payment $model, $data): bool|null
     {
         $model->fill($data);
+
         return $this->save($model);
     }
 
     /**
      * Save current resource
-     * @param Payment $model
-     * @return bool|null
      */
     public function save(Payment $model): bool|null
     {
@@ -71,8 +62,6 @@ class PaymentRepository implements PaymentRepositoryInterface
 
     /**
      * Delete current resource
-     * @param Payment $model
-     * @return bool|null
      */
     public function delete(Payment $model): bool|null
     {

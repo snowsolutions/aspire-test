@@ -2,25 +2,19 @@
 
 namespace Tests\Feature\Controllers\Api;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-
 class AuthenticateControllerTest extends ApiTestCase
 {
-
     /**
      * Test POST /api/users/login (Success)
-     * @return void
      */
     public function testLoginSuccess(): void
     {
         $jsonData = [
             'email' => 'user@test.com',
-            'password' => '123456'
+            'password' => '123456',
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/users/login', $jsonData);
+        $response = $this->postJson(self::USER_API_PREFIX.'/users/login', $jsonData);
 
         $content = $response->getContent();
 
@@ -33,33 +27,31 @@ class AuthenticateControllerTest extends ApiTestCase
 
     /**
      * Test POST /api/users/login (Fail)
-     * @return void
      */
-
     public function testLoginFail(): void
     {
         $jsonData = [
             'email' => 'user@test.com',
-            'password' => 'incorrect_password'
+            'password' => 'incorrect_password',
         ];
 
-        $response = $this->postJson(self::USER_API_PREFIX . '/users/login', $jsonData);
+        $response = $this->postJson(self::USER_API_PREFIX.'/users/login', $jsonData);
 
         $response->assertStatus(422);
     }
 
     /**
      * Test GET /api/users/info (Success)
+     *
      * @return void
      */
-
     public function testInfo()
     {
         $token = $this->loginAsUser();
 
-        $response = $this->get(self::USER_API_PREFIX . '/users/info')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/users/info')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $content = $response->getContent();
@@ -77,14 +69,14 @@ class AuthenticateControllerTest extends ApiTestCase
 
     /**
      * Test GET /api/users/info (Fail)
+     *
      * @return void
      */
-
     public function testInfoFail()
     {
-        $response = $this->get(self::USER_API_PREFIX . '/users/info')->withHeaders([
+        $response = $this->get(self::USER_API_PREFIX.'/users/info')->withHeaders([
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer '
+            'Authorization' => 'Bearer ',
         ]);
 
         $this->assertEquals(403, $response->getStatusCode());

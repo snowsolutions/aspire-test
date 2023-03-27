@@ -11,7 +11,6 @@ use App\Repositories\LoanApplication\LoanApplicationRepository;
 use App\Services\LoanApplication\CreateApplicationService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class LoanApplicationController extends Controller
 {
@@ -19,19 +18,20 @@ class LoanApplicationController extends Controller
     use AuthenticatedUser;
 
     protected LoanApplicationRepository $loanApplicationRepository;
+
     protected CreateApplicationService $createApplicationService;
 
     public function __construct(
         LoanApplicationRepository $loanApplicationRepository,
-        CreateApplicationService  $createApplicationService
-    )
-    {
+        CreateApplicationService $createApplicationService
+    ) {
         $this->loanApplicationRepository = $loanApplicationRepository;
         $this->createApplicationService = $createApplicationService;
     }
 
     /**
      * Retrieve list of loan application from current logged user
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
@@ -39,6 +39,7 @@ class LoanApplicationController extends Controller
         try {
             $userId = $this->loggedUser()->getAuthIdentifier();
             $data = $this->loanApplicationRepository->findAllByUserId($userId);
+
             return ApiResponseHandler::success(new LoanApplicationCollection($data));
         } catch (\Exception $exception) {
             return ApiResponseHandler::exception($exception->getMessage());
@@ -47,7 +48,7 @@ class LoanApplicationController extends Controller
 
     /**
      * Retrieve specific loan application with ID
-     * @param $applicationId
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($applicationId)
@@ -55,6 +56,7 @@ class LoanApplicationController extends Controller
         try {
             $application = $this->loanApplicationRepository->findById($applicationId);
             $this->authorize('view', $application);
+
             return ApiResponseHandler::success(new LoanApplicationResource($application));
         } catch (AuthorizationException) {
             return ApiResponseHandler::unauthorized();
@@ -65,23 +67,25 @@ class LoanApplicationController extends Controller
 
     /**
      * Store new loan application
-     * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function store(Request $request)
     {
         $data = $request->only(['purpose', 'amount', 'term']);
-        list($isInvalid, $errorResponse) = $this->handleValidation($data, [
+        [$isInvalid, $errorResponse] = $this->handleValidation($data, [
             'purpose' => 'required',
             'amount' => 'required',
             'term' => 'required',
         ]);
         try {
-            if (!$isInvalid) {
+            if (! $isInvalid) {
                 $data['user_id'] = $this->loggedUser()->getAuthIdentifier();
                 $application = $this->createApplicationService->execute($data);
+
                 return ApiResponseHandler::success($application);
             }
+
             return $errorResponse;
         } catch (\Exception $exception) {
             return ApiResponseHandler::exception($exception->getMessage());

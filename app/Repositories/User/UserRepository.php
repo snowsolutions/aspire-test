@@ -3,15 +3,13 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface
 {
-
     /**
      * Retrieve all records of the resource
-     * @return Collection
      */
     public function findAll(): Collection
     {
@@ -20,8 +18,6 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * Retrieve a record of the resource with specific ID
-     * @param $id
-     * @return User|null
      */
     public function findById($id): ?User
     {
@@ -30,19 +26,20 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * Update current resource with specific data
-     * @param User $model
-     * @return bool|null
+     *
+     * @param  User  $model
      */
     public function update(Model $model, $data): bool|null
     {
         $model->fill($data);
+
         return $this->save($model);
     }
 
     /**
      * Save current resource
-     * @param User $model
-     * @return bool|null
+     *
+     * @param  User  $model
      */
     public function save(Model $model): bool|null
     {
@@ -51,8 +48,8 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * Delete current resource
-     * @param User $model
-     * @return bool|null
+     *
+     * @param  User  $model
      */
     public function delete(Model $model): bool|null
     {

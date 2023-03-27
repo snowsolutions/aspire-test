@@ -9,9 +9,6 @@ class LoanApplicationPolicy
 {
     /**
      * User can only view their Loan Application
-     * @param User $user
-     * @param LoanApplication $loanApplication
-     * @return bool
      */
     public function view(User $user, LoanApplication $loanApplication): bool
     {

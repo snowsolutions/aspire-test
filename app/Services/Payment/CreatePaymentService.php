@@ -2,7 +2,6 @@
 
 namespace App\Services\Payment;
 
-use App\Exceptions\LoanApplication\InvalidApplicationTerm;
 use App\Models\LoanApplication;
 use App\Models\Payment;
 use App\Repositories\Payment\PaymentRepository;
@@ -13,14 +12,13 @@ class CreatePaymentService
 
     public function __construct(
         PaymentRepository $paymentRepository
-    )
-    {
+    ) {
         $this->paymentRepository = $paymentRepository;
     }
 
     /**
      * Create payment records base on given loan application
-     * @param LoanApplication $application
+     *
      * @return array
      */
     public function execute(LoanApplication $application)
@@ -55,6 +53,7 @@ class CreatePaymentService
             $this->paymentRepository->save($payment);
             $payments[] = $payment;
         }
+
         return $payments;
     }
 }
